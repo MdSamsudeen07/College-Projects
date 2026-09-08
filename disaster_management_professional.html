@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster Management | Mohamed Samsudeen M</title>
+
+<!-- Professional icon library -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+:root{
+  --navy:#0b1730;
+  --blue:#1769aa;
+  --blue2:#2490d0;
+  --sky:#eaf6ff;
+  --white:#ffffff;
+  --text:#18283d;
+  --muted:#65758b;
+  --line:#dce7f2;
+  --danger:#d83a4b;
+  --success:#138a63;
+  --shadow:0 12px 35px rgba(16,42,67,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  color:var(--text);
+  background:#f5f8fc;
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(135deg,#09172f 0%,#123d69 60%,#1769aa 100%);
+  color:white;
+  padding:24px 7% 70px;
+  position:relative;
+  overflow:hidden;
+}
+header:after{
+  content:"";
+  position:absolute;
+  width:420px;height:420px;border-radius:50%;
+  right:-140px;top:-220px;
+  background:rgba(255,255,255,.07);
+}
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  max-width:1200px;margin:auto;
+}
+.brand{display:flex;gap:10px;align-items:center;font-weight:800;letter-spacing:.5px}
+.brand-mark{
+  width:38px;height:38px;border-radius:10px;
+  display:grid;place-items:center;background:#fff;color:var(--blue);
+}
+.student{text-align:right;font-size:13px;color:#d8e9f8}
+.student strong{display:block;color:#fff;font-size:14px}
+.hero{
+  max-width:1200px;margin:55px auto 0;
+  position:relative;z-index:1;
+}
+.hero small{
+  color:#8fd3ff;font-weight:800;letter-spacing:2px;
+}
+.hero h1{
+  font-size:clamp(38px,6vw,72px);
+  line-height:1.03;margin:12px 0 18px;max-width:850px;
+}
+.hero p{max-width:720px;color:#d8e6f3;font-size:17px}
+.hero-stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.stat{
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.15);
+  padding:11px 16px;border-radius:12px;font-size:14px;
+}
+.container{max-width:1200px;margin:-34px auto 0;padding:0 22px;position:relative}
+.toolbar{
+  background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);
+  border-radius:18px;padding:16px;display:flex;gap:12px;flex-wrap:wrap;
+  align-items:center;
+}
+.search{flex:1;min-width:220px;position:relative}
+.search i{position:absolute;left:14px;top:13px;color:#7a8ba0}
+.search input{
+  width:100%;height:46px;border:1px solid var(--line);border-radius:11px;
+  padding:0 15px 0 42px;font-size:15px;outline:none;background:#f9fbfd;
+}
+.search input:focus{border-color:#5aaee0;background:white}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter{
+  border:1px solid var(--line);background:white;color:var(--muted);
+  padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700;
+}
+.filter.active,.filter:hover{background:var(--blue);color:white;border-color:var(--blue)}
+.section-head{
+  display:flex;justify-content:space-between;align-items:end;
+  margin:46px 0 20px;gap:15px
+}
+.section-head h2{font-size:28px}
+.section-head p{color:var(--muted);font-size:14px}
+.grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  padding-bottom:65px;
+}
+.card{
+  background:white;border:1px solid var(--line);border-radius:18px;
+  padding:23px;box-shadow:0 6px 22px rgba(16,42,67,.05);
+  transition:.25s;position:relative;overflow:hidden;
+}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#bddcf1}
+.iconbox{
+  width:56px;height:56px;border-radius:14px;display:grid;place-items:center;
+  margin-bottom:18px;
+}
+.iconbox svg{width:29px;height:29px}
+.card h3{font-size:21px;margin-bottom:7px}
+.card p{font-size:14px;color:var(--muted);min-height:66px}
+.tag{
+  display:inline-flex;align-items:center;margin:15px 0 18px;
+  padding:5px 9px;border-radius:7px;background:#eef6fc;color:#1769aa;
+  font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px
+}
+.guide{
+  width:100%;border:0;border-radius:10px;padding:12px;
+  background:#102846;color:white;font-weight:800;cursor:pointer;
+}
+.guide:hover{background:var(--blue)}
+.modal{
+  position:fixed;inset:0;background:rgba(3,13,27,.72);
+  display:none;align-items:center;justify-content:center;padding:20px;z-index:50;
+}
+.modal.show{display:flex}
+.panel{
+  width:min(980px,100%);max-height:90vh;overflow:auto;background:white;
+  border-radius:22px;box-shadow:0 25px 70px rgba(0,0,0,.3);
+}
+.panel-head{
+  color:white;background:linear-gradient(135deg,#0b1730,#1769aa);
+  padding:28px 30px;position:relative;
+}
+.panel-title{display:flex;gap:16px;align-items:center}
+.panel-title .bigicon{
+  width:60px;height:60px;border-radius:15px;background:rgba(255,255,255,.13);
+  display:grid;place-items:center
+}
+.panel-title svg{width:32px;height:32px}
+.panel h2{font-size:30px}
+.panel-head p{color:#dcecf8;font-size:14px;margin-top:4px}
+.close{
+  position:absolute;right:20px;top:18px;width:38px;height:38px;border:0;
+  border-radius:10px;background:rgba(255,255,255,.12);color:white;cursor:pointer;
+}
+.panel-body{padding:28px}
+.about{
+  background:var(--sky);border-left:4px solid var(--blue);
+  border-radius:10px;padding:16px;margin-bottom:22px;color:#34506b
+}
+.safety{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.safety-box{border-radius:15px;padding:20px}
+.safety-box h3{display:flex;gap:8px;align-items:center;margin-bottom:14px}
+.safety-box ul{list-style:none}
+.safety-box li{margin:10px 0;font-size:14px;color:#41546a}
+.dos{background:#effaf6;border:1px solid #c8eddf}
+.dos h3{color:var(--success)}
+.donts{background:#fff2f4;border:1px solid #f3ccd2}
+.donts h3{color:var(--danger)}
+footer{
+  text-align:center;background:#09172f;color:#a9bed2;padding:28px 20px;
+  font-size:13px
+}
+footer strong{color:white}
+.empty{grid-column:1/-1;text-align:center;padding:55px;background:white;border-radius:18px;color:var(--muted)}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){
+  .topbar{align-items:flex-start;gap:15px}.student{font-size:11px}
+  .hero{margin-top:40px}.grid{grid-template-columns:1fr}
+  .safety{grid-template-columns:1fr}.panel-body{padding:20px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark"><i data-lucide="shield-check"></i></div>
+      <span>SAFETY • AWARENESS</span>
+    </div>
+    <div class="student">
+      <strong>Mohamed Samsudeen M</strong>
+      Roll No: 23UAD050
+    </div>
+  </div>
+
+  <div class="hero">
+    <small>DISASTER MANAGEMENT</small>
+    <h1>Preparedness saves lives.</h1>
+    <p>
+      A professional safety guide for understanding major disasters,
+      responding correctly, and knowing what to do before, during and after an emergency.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><i data-lucide="shield" style="width:15px;vertical-align:middle"></i> 10 Disaster Types</div>
+      <div class="stat"><i data-lucide="check-circle" style="width:15px;vertical-align:middle"></i> Do's & Don'ts</div>
+      <div class="stat"><i data-lucide="smartphone" style="width:15px;vertical-align:middle"></i> Responsive Design</div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="toolbar">
+    <div class="search">
+      <i data-lucide="search"></i>
+      <input id="search" placeholder="Search disasters...">
+    </div>
+    <div class="filters">
+      <button class="filter active" data-filter="all">All</button>
+      <button class="filter" data-filter="natural">Natural</button>
+      <button class="filter" data-filter="weather">Weather</button>
+      <button class="filter" data-filter="human">Human-made</button>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div>
+      <h2>Emergency Safety Guides</h2>
+      <p>Select a disaster to view its safety instructions.</p>
+    </div>
+  </div>
+
+  <section class="grid" id="grid"></section>
+</main>
+
+<div class="modal" id="modal">
+  <div class="panel">
+    <div class="panel-head">
+      <button class="close" id="close"><i data-lucide="x"></i></button>
+      <div class="panel-title">
+        <div class="bigicon" id="modalIcon"></div>
+        <div>
+          <h2 id="modalTitle"></h2>
+          <p id="modalSubtitle"></p>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="about"><strong>About this disaster</strong><br><span id="modalAbout"></span></div>
+      <div class="safety">
+        <div class="safety-box dos">
+          <h3><i data-lucide="circle-check"></i> DO'S</h3>
+          <ul id="dos"></ul>
+        </div>
+        <div class="safety-box donts">
+          <h3><i data-lucide="circle-x"></i> DON'TS</h3>
+          <ul id="donts"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>Disaster Management Awareness</strong><br>
+  Mohamed Samsudeen M • 23UAD050<br>
+  Stay Alert • Stay Prepared • Stay Safe
+</footer>
+
+<script>
+const data=[
+{name:"Flood",icon:"waves",color:"#e7f5ff",ink:"#1479b8",cat:"natural",
+sub:"Move to safer and higher ground.",
+about:"Flooding occurs when water covers land that is normally dry, often because of heavy rain, overflowing rivers or drainage problems.",
+dos:["Move to higher ground.","Follow evacuation instructions.","Keep water and emergency supplies ready.","Carry essential medicines and documents.","Switch off electricity if safe.","Monitor official alerts.","Help vulnerable people.","Return only after official clearance."],
+donts:["Do not walk through fast-moving water.","Do not drive through flooded roads.","Do not touch electrical equipment in water.","Do not drink untreated floodwater.","Do not enter damaged buildings.","Do not ignore warnings.","Do not go near overflowing rivers.","Do not return too early."]},
+
+{name:"Earthquake",icon:"activity",color:"#f3edff",ink:"#7351c7",cat:"natural",
+sub:"Drop, Cover and Hold On.",
+about:"An earthquake is sudden ground shaking caused by movement and release of energy within the Earth's crust.",
+dos:["Drop to the ground.","Take cover under sturdy furniture.","Hold on until shaking stops.","Stay away from glass.","Protect your head and neck.","Move to an open area if outdoors.","Check for injuries afterward.","Follow official instructions."],
+donts:["Do not run outside during shaking.","Do not stand near windows.","Do not use elevators.","Do not stand under heavy objects.","Do not panic or push.","Do not touch damaged wires.","Do not enter severely damaged buildings.","Do not ignore aftershocks."]},
+
+{name:"Cyclone",icon:"tornado",color:"#eaf1ff",ink:"#3767c7",cat:"weather",
+sub:"Stay indoors and follow evacuation alerts.",
+about:"A cyclone is a powerful rotating storm that can produce destructive winds, heavy rain, flooding and storm surges.",
+dos:["Monitor official weather warnings.","Stay inside a strong building.","Secure loose outdoor objects.","Keep an emergency kit ready.","Store drinking water.","Charge phones and emergency devices.","Evacuate when instructed.","Stay away from windows."],
+donts:["Do not go outside during the storm.","Do not stand near windows.","Do not ignore evacuation orders.","Do not travel through flooded roads.","Do not approach the coastline.","Do not touch fallen wires.","Do not spread rumours.","Do not return until cleared."]},
+
+{name:"Tsunami",icon:"waves",color:"#e6fbfb",ink:"#118b91",cat:"natural",
+sub:"Move inland and to higher ground.",
+about:"A tsunami is a series of powerful ocean waves usually triggered by underwater earthquakes, volcanic activity or landslides.",
+dos:["Move to higher ground.","Move inland.","Follow evacuation routes.","Listen to warnings.","Carry essential supplies.","Help vulnerable people.","Stay away from beaches.","Wait for official clearance."],
+donts:["Do not go to the beach to watch waves.","Do not ignore warnings.","Do not return after the first wave.","Do not drive through floodwater.","Do not stay near coastal rivers.","Do not approach damaged structures.","Do not spread false information.","Do not assume one wave means danger is over."]},
+
+{name:"Landslide",icon:"mountain",color:"#f5f1e9",ink:"#9a6a28",cat:"natural",
+sub:"Move away from unstable slopes.",
+about:"A landslide is the movement of soil, rocks or debris down a slope, often triggered by heavy rain or earthquakes.",
+dos:["Move away from the affected area.","Reach stable ground.","Listen to authorities.","Report unusual ground movement.","Keep an emergency kit ready.","Stay alert during heavy rain.","Watch for cracks.","Avoid known danger zones."],
+donts:["Do not approach an active landslide.","Do not stand below unstable slopes.","Do not cross debris flows.","Do not ignore evacuation warnings.","Do not enter damaged buildings.","Do not walk near unstable cliffs.","Do not return too early.","Do not spread unverified information."]},
+
+{name:"Thunderstorm",icon:"cloud-lightning",color:"#fff6df",ink:"#c27b18",cat:"weather",
+sub:"Stay indoors during lightning.",
+about:"Thunderstorms can produce lightning, thunder, strong winds, heavy rain and sometimes hail.",
+dos:["Stay inside a strong building.","Keep away from windows.","Monitor weather alerts.","Unplug sensitive devices if safe.","Remain indoors until it passes.","Seek shelter when lightning is nearby.","Stay away from rooftops.","Keep emergency lights available."],
+donts:["Do not stand under isolated trees.","Do not stay in open fields.","Do not swim during storms.","Do not use wired appliances unnecessarily.","Do not touch metal objects outdoors.","Do not remain near tall structures.","Do not stay on rooftops.","Do not ignore warnings."]},
+
+{name:"Wildfire",icon:"flame",color:"#fff0eb",ink:"#d64a28",cat:"natural",
+sub:"Evacuate early and avoid smoke.",
+about:"A wildfire is an uncontrolled fire that spreads through forests, grasslands or other vegetation and can threaten people and property.",
+dos:["Follow evacuation instructions.","Leave early when ordered.","Keep windows closed when smoke is present.","Carry emergency supplies.","Protect your nose and mouth from smoke.","Keep documents accessible.","Listen to official updates.","Help vulnerable people evacuate."],
+donts:["Do not fight a large wildfire yourself.","Do not ignore evacuation orders.","Do not drive through heavy smoke.","Do not breathe smoke unnecessarily.","Do not return without permission.","Do not approach burning areas.","Do not spread rumours.","Do not block emergency vehicles."]},
+
+{name:"Heatwave",icon:"sun",color:"#fff8df",ink:"#d08a00",cat:"weather",
+sub:"Stay cool and remain hydrated.",
+about:"A heatwave is a prolonged period of unusually high temperatures that can cause dehydration, heat exhaustion and heat stroke.",
+dos:["Drink plenty of water.","Stay indoors during peak heat.","Wear loose light clothing.","Use cooling systems when available.","Check on elderly people and children.","Drink fluids regularly.","Rest when working outdoors.","Keep your home cool."],
+donts:["Do not stay in direct sun for long.","Do not perform heavy activity during peak heat.","Do not leave children or pets in vehicles.","Do not wait until thirsty to drink.","Do not ignore heat exhaustion.","Do not wear heavy clothing.","Do not spend unnecessary time outdoors at midday.","Do not ignore heat warnings."]},
+
+{name:"Industrial Disaster",icon:"factory",color:"#edf3f7",ink:"#4b6578",cat:"human",
+sub:"Move away from hazardous industrial areas.",
+about:"Industrial disasters can involve fires, explosions, chemical releases, hazardous materials or accidents at industrial facilities.",
+dos:["Follow emergency instructions.","Move away from affected areas.","Shelter indoors if instructed.","Close doors and windows when appropriate.","Report emergencies.","Follow evacuation routes.","Keep emergency contacts available.","Wait for official clearance."],
+donts:["Do not approach chemical spills.","Do not touch unknown substances.","Do not enter restricted areas.","Do not ignore alarms.","Do not spread unverified information.","Do not interfere with responders.","Do not inhale chemical fumes.","Do not return without permission."]},
+
+{name:"Nuclear Emergency",icon:"radiation",color:"#f2f0ff",ink:"#7355aa",cat:"human",
+sub:"Get inside, stay inside and stay informed.",
+about:"A nuclear emergency may involve radioactive material. Protective actions focus on reducing exposure and following official instructions.",
+dos:["Get inside a strong building.","Stay indoors until instructed.","Move toward the centre of the building if possible.","Close windows and doors.","Turn off ventilation when instructed.","Follow official broadcasts.","Keep emergency supplies ready.","Evacuate if officially instructed."],
+donts:["Do not leave shelter without instructions.","Do not spread unverified information.","Do not approach restricted areas.","Do not ignore official alerts.","Do not interfere with responders.","Do not collect unknown objects.","Do not return to evacuated areas without permission.","Do not rely on rumours."]}
+];
+
+const grid=document.getElementById("grid");
+let active="all";
+
+function render(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  const list=data.filter(x=>
+    (active==="all"||x.cat===active) &&
+    (x.name.toLowerCase().includes(q)||x.about.toLowerCase().includes(q))
+  );
+
+  grid.innerHTML=list.length?list.map((x,i)=>`
+    <article class="card">
+      <div class="iconbox" style="background:${x.color};color:${x.ink}">
+        <i data-lucide="${x.icon}"></i>
+      </div>
+      <h3>${x.name}</h3>
+      <p>${x.about}</p>
+      <span class="tag">${x.cat}</span>
+      <button class="guide" onclick="openGuide(${data.indexOf(x)})">View Safety Guide <span>→</span></button>
+    </article>`).join("")
+    :`<div class="empty">No disaster matches your search.</div>`;
+
+  lucide.createIcons();
+}
+
+function openGuide(i){
+  const x=data[i];
+  document.getElementById("modalTitle").textContent=x.name;
+  document.getElementById("modalSubtitle").textContent=x.sub;
+  document.getElementById("modalAbout").textContent=x.about;
+  document.getElementById("modalIcon").innerHTML=`<i data-lucide="${x.icon}"></i>`;
+  document.getElementById("dos").innerHTML=x.dos.map(v=>`<li>✓ ${v}</li>`).join("");
+  document.getElementById("donts").innerHTML=x.donts.map(v=>`<li>✕ ${v}</li>`).join("");
+  document.getElementById("modal").classList.add("show");
+  document.body.style.overflow="hidden";
+  lucide.createIcons();
+}
+
+function closeGuide(){
+  document.getElementById("modal").classList.remove("show");
+  document.body.style.overflow="";
+}
+
+document.getElementById("close").onclick=closeGuide;
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeGuide()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeGuide()});
+document.getElementById("search").oninput=render;
+
+document.querySelectorAll(".filter").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    active=btn.dataset.filter;
+    render();
+  };
+});
+
+render();
+lucide.createIcons();
+</script>
+</body>
+</html>
